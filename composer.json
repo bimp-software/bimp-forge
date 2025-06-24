@@ -1,0 +1,21 @@
+{
+    "name": "bimp/forge",
+    "description": "The framework bimp forge",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Bimp\\Forge\\": "bimp/classes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "bimp-software",
+            "email": "bimp.software@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "chillerlan/php-qrcode": "*",
+        "dompdf/dompdf": "*"
+    }
+}

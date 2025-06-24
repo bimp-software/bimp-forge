@@ -1,0 +1,302 @@
+/* Fuente principal */
+html, body {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 15px;
+    overflow-x: hidden !important;
+}
+
+/* LOADER */
+#bimp-loader {
+    text-align: center;
+    transition: opacity 0.5s ease;
+}
+
+#bimp-loader.hide {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+/* LISTA */
+.list-bimp {
+    list-style-type: square;
+    padding-left: 1.2rem;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.list-bimp li::marker {
+    color: #B63244;
+}
+
+.list-bimp li {
+    margin-bottom: 12px;
+    font-size: 15px;
+}
+
+/* BARRA y CIRCULO */
+.barra {
+    height: 12px;
+    width: 15px;
+}
+
+.circulo {
+    width: 16px;
+    height: 12px;
+}
+
+/* Fundadores */
+.founders-container {
+    position: relative;
+    height: 400px;
+    margin-bottom: 30px;
+}
+
+.founder-img {
+    position: absolute;
+    width: 80%;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    object-fit: cover;
+    height: 300px;
+}
+
+.founder-img:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.founder-1 {
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.founder-2 {
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.founder-1:hover,
+.founder-2:hover {
+    z-index: 3 !important;
+}
+
+/* Logos de clientes */
+.client-logo {
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    padding: 0 20px;
+    max-width: 100%;
+    height: auto;
+}
+
+.client-logo:hover {
+    filter: grayscale(0);
+    opacity: 1;
+}
+
+/* Estilo para títulos con círculo */
+.corner-circle {
+    position: absolute;
+    top: -7px;
+    left: -7px;
+    width: 12px;
+    height: 12px;
+    border: 3px solid #E83B22;
+    border-radius: 50%;
+    background-color: transparent;
+}
+
+.title-with-circle {
+    position: relative;
+    display: inline-block;
+}
+
+/* EQUIPO */
+.carousel .card {
+    border: none;
+    background-color: #f0f0f0;
+    text-align: center;
+    border-radius: 8px;
+    padding: 20px 10px;
+}
+
+.icon-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: #6c6c6c;
+    color: #fff;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.icon-circle:hover {
+    background-color: #B63244;
+    transform: scale(1.1);
+}
+
+.plan-card {
+    color: #fff;
+    border-radius: 18px;
+    padding: 30px 20px; /* Reducido para móviles */
+    box-shadow: var(--bs-box-shadow-lg);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    background-color: #1A1A1A; /* Corregido de background-attachment */
+    margin-bottom: 20px; /* Espacio entre cards en móviles */
+    min-height: 100%; /* Asegura misma altura */
+}
+
+.plan-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.plan-card::before {
+    content: "";
+    position: absolute;
+    top: -100px;
+    left: -30%;
+    width: 200%;
+    height: 200px;
+    transform: rotate(45deg);
+    opacity: 0.9;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.plan-card:hover::before {
+    transform: rotate(45deg) scale(1.5);
+    z-index: -1;
+    opacity: 1;
+}
+
+/* Colores de gradiente (tus colores originales) */
+.plan-base::before {
+    background: linear-gradient(135deg, #2277BA, #3399FF);
+}
+
+.plan-estandar::before {
+    background: linear-gradient(135deg, #B63244, #E94E5A);
+}
+
+.plan-experto::before {
+    background: linear-gradient(135deg, #FBA60C, #FFD700);
+}
+
+/* Botones (mejorado para móviles) */
+.btn-plan {
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
+    padding: 10px 20px; /* Mejor padding para móviles */
+    font-size: 1rem; /* Tamaño más adecuado */
+    width: 100%;
+    border: none;
+}
+
+.btn-plan:hover {
+    background-color: #FBA60C;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Lista de características (mejorada para móviles) */
+.plan-features {
+    padding-left: 1rem;
+    margin-bottom: 20px; /* Reducido para móviles */
+}
+
+.plan-features li {
+    color: #616161;
+    margin-bottom: 8px; /* Reducido para móviles */
+    font-size: 0.9rem; /* Tamaño ajustado */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    line-height: 1.4; /* Mejor espaciado */
+}
+
+/* Ribbon mejorado */
+.ribbon {
+    position: absolute;
+    top: 15px;
+    right: -40px;
+    background: #FBA60C;
+    color: #0D0D0D;
+    font-weight: bold;
+    transform: rotate(45deg);
+    padding: 8px 35px; /* Ajustado para móviles */
+    font-size: 0.7rem; /* Tamaño reducido */
+    z-index: 3;
+}
+
+/* Títulos y subtítulos responsive */
+.card-title {
+    font-size: 1.5rem; /* Base para móviles */
+    margin-bottom: 1rem;
+}
+
+.card-subtitle {
+    font-size: 2rem; /* Base para móviles */
+    margin: 1.5rem 0;
+}
+
+/* Media Queries para ajustar en diferentes tamaños */
+@media (min-width: 576px) {
+    .plan-card {
+        padding: 35px 25px;
+    }
+    .btn-plan {
+        font-size: 1.1rem;
+        padding: 12px 24px;
+    }
+    .plan-features li {
+        font-size: 0.95rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .plan-card {
+        padding: 40px 25px; /* Tu valor original */
+        margin-bottom: 0; /* Quitar margen en desktop */
+    }
+    .card-title {
+        font-size: 1.75rem;
+    }
+    .card-subtitle {
+        font-size: 3rem;
+    }
+    .ribbon {
+        font-size: 0.75rem;
+        padding: 10px 35px;
+    }
+}
+
+@media (min-width: 992px) {
+    .card-title {
+        font-size: 2rem;
+    }
+    .card-subtitle {
+        font-size: 3.5rem;
+    }
+}
+.ribbon {
+    position: absolute;
+    top: 14px;
+    right: -40px;
+    background: #FBA60C;
+    color: #0D0D0D;
+    font-weight: bold;
+    transform: rotate(45deg);
+    padding: 10px 35px;
+    font-size: 0.75rem;
+    z-index: 2;
+}
