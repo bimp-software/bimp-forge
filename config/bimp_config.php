@@ -8,7 +8,7 @@ define('SITE_VERSION'  , '2.0.0');
  */
 define('DB_ENGINE'     , 'mysql');
 define('DB_HOST'       , 'localhost');
-define('DB_NAME'       , 'bimpsoftware');
+define('DB_NAME'       , '');
 define('DB_USER'       , 'root');
 define('DB_PASS'       , '');
 define('DB_CHARSET'    , 'utf8');
@@ -27,10 +27,10 @@ define('AUTH_ID_NAME'  , 'bimp__cookie_id');
 /**
  * Sal del sistema
  */
-define('AUTH_SALT', 'BimpForge2025!@#_$SecureSaltKey_9f8e7d6c5b4a3e2d1c0f_AuthSaltForBimpSoftwareWeb_v3$%&*()_UniqueSalt_CHILE_CURICO_20250623');
+define('AUTH_SALT', '');
 
 /**
  * Credenciales para el envio de correos
  */
-define('CORREO_EMPRESA', 'no_replay@bimp-software.cl');
-define('CLAVE_EMPRESA' , '-q@RRsu#zpa4');
+define('CORREO_EMPRESA', '');
+define('CLAVE_EMPRESA' , '');
