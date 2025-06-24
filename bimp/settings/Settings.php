@@ -2,7 +2,7 @@
 
 //Saber si estamos trabajando de forma local o remota
 define('IS_LOCAL', in_array($_SERVER['REMOTE_ADDR'],['127.0.0.1','::1']));
-define('BASEPATH', IS_LOCAL ? '/bimp-software/' : '____ EL BASEPATH EN PRODUCCION ____');
+define('BASEPATH', IS_LOCAL ? '/bimp-forge/' : '____ EL BASEPATH EN PRODUCCION ____');
 
 /**
  * Informacion del sitio
@@ -82,6 +82,7 @@ define('SERVER'      , CLASSES.'server'.DS);
  */
 define('COMPONENTS'   , PUBLICO.'components'.DS);
 define('UPLOADS'      , PUBLICO.'uploads'.DS);
+define('UTILS'      , PUBLICO.'utils'.DS);
 define('UPLOADED', ROOT.'public'.DS.'uploads'.DS);
 
 

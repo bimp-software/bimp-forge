@@ -6,8 +6,8 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
-    <script type="module" src="<?= JS.'main.js' ?>"></script> 
+
+    <script src="<?= JS.'main.js' ?>"></script> 
     
     <?php require_once INCLUDES.'inc_hscripts.php'; ?>
 
