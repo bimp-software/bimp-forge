@@ -7,6 +7,11 @@ use Bimp\Forge\View;
 abstract class Controller {
 
     /**
+     * Proximamente
+     */
+    protected string $controllerType = 'regular'; //regular | ajax | endpoint
+
+    /**
      * La vista a renderizar
      * @var string $name
      */
@@ -22,8 +27,11 @@ abstract class Controller {
      */
     protected string $description = '';
 
-    function __construct() {}
-    
+    function __construct(string $controllerType = 'regular') {
+        $this->controllerType = $controllerType;
+
+    }
+
     /**
      * Define el nombre de la vista a ser utilizada en la ruta actual
      * @param string $View

@@ -3,9 +3,9 @@
 namespace Bimp\Forge\Database;
 
 use Bimp\Forge\Database\Database;
+use Bimp\Forge\Database\Query;
 
-
-class Model extends Database{
+class Model extends Database implements Query{
 
     public static function list($table, $params = [], $limit = null){
         $cols_values = "";

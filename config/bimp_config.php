@@ -1,7 +1,15 @@
 <?php
 
-define('SITE_NAME'     , 'Bimp Software');
+define('SITE_NAME'     , 'Bimp Forge');
 define('SITE_VERSION'  , '2.0.0');
+
+/**
+ * Define si es requerida autenticacion para consumir los recursos de la API
+ * programaticamente se define que recursos son accesibles sin autenticación
+ * 
+ * Por defecto true | false para consumir la API sin autenticacion | no recomendado
+ */
+define('API_AUTH', true);
 
 /**
  * Set para conexion en produccion o servidor 

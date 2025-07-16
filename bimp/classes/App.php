@@ -5,10 +5,12 @@ namespace Bimp\Forge;
 use Bimp\Forge\Helpers\Autoloader;
 use Bimp\Forge\Router\Routes;
 use Bimp\Forge\Security\Csrf;
-
 use Bimp\Forge\Flasher\Flasher;
 
-class App{
+use Bimp\Forge\Logs\Logs;
+use Bimp\Forge\Exceptions\Exceptions;
+
+class App {
 
     /**
      * Nombre del framework
@@ -28,6 +30,7 @@ class App{
      */
     private $lng          = 'es';
 
+
     public function __construct(){
         try {
             $this->init();
@@ -44,7 +47,7 @@ class App{
         $this->init_autoload();
         $this->init_configuracion();
         $this->init_csrf();
-
+        $this->init_logs();
         $this->init_router();
     }
 
@@ -107,6 +110,19 @@ class App{
         return;
     }
 
+    private function init_logs(){
+        $logger = new Logs(LOG, is_local() ? 'local' : 'production');
+        set_exception_handler([new Exceptions($logger), 'handle']);
+
+        if(is_local()){
+            ini_set('display_errors', 1);
+            error_reporting(E_ALL);
+        }else{
+            ini_set('display_errors', 0);
+            error_reporting(0);
+        }
+    }
+
     private function init_router() {
         $routes = new Routes();
         $routes->dispatch();
@@ -114,6 +130,7 @@ class App{
 
     public static function run(){
         new self();
+
         return;
     }
 }

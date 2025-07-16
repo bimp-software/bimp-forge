@@ -37,7 +37,7 @@ define('BIMP'        , ROOT.'bimp'.DS);
 define('CONFIG'      , ROOT.'config'.DS);
 define('PUBLICO'     , ROOT.'public'.DS);
 define('TEMPLATES'   , ROOT.'templates'.DS);
-define('TEMP'        , ROOT.'temp'.DS);
+define('LOG'         , ROOT.'log'.DS);
 define('VENDOR'      , ROOT.'vendor'.DS);
 
 /**
@@ -66,6 +66,7 @@ define('CONSOLE'     , CLASSES.'console'.DS);
 define('COOKIES'     , CLASSES.'cookies'.DS);
 define('DATABASE'    , CLASSES.'database'.DS);
 define('DIRECTIVES'  , CLASSES.'directives'.DS);
+define('EXCEPTIONS'  , CLASSES.'exceptions'.DS);
 define('FLASHER'     , CLASSES.'flasher'.DS);
 define('HELPERS'     , CLASSES.'helpers'.DS);
 define('INTERFACES'  , CLASSES.'interfaces'.DS);
@@ -75,6 +76,7 @@ define('ROUTER'      , CLASSES.'router'.DS);
 define('MODULES'     , CLASSES.'modules'.DS);
 define('SECURITY'    , CLASSES.'security'.DS);
 define('SERVER'      , CLASSES.'server'.DS);
+define('SERVICES'    , CLASSES.'services'.DS);
 
 
 /**
@@ -114,6 +116,15 @@ define('LAYOUTS'      , TEMPLATES.'layouts'.DS);
 /** PARA GLOB */
 define('JS_PATH' , ROOT.'resources'.DS.'js'.DS);           // Para usar en glob()
 define('CSS_PATH' , ROOT.'resources'.DS.'css'.DS);           // Para usar en glob()
+
+
+/**
+ * Keys para consumos de la API de esta instancia de Bimp Forge
+ * puedes regenerarlas en Bimp/generate
+ * @since 1.0.0
+ */
+define('API_PUBLIC_KEY', '');
+define('API_PRIVATE_KEY', '');
 
 /**
  * Configuracion de controladores y metodos por defecto

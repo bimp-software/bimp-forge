@@ -37,6 +37,8 @@ class Autoloader{
             CONSOLE,
             COOKIES,
             DATABASE,
+            DIRECTIVES,
+            EXCEPTIONS,
             FLASHER,
             HELPERS,
             INTERFACES,
@@ -46,6 +48,7 @@ class Autoloader{
             MODULES,
             SECURITY,
             SERVER,
+            SERVICES,
 
             COMPONENTS,
             PLUGINS,

@@ -2,8 +2,7 @@
 
 use Bimp\Forge\Interfaces\IController;
 use Bimp\Forge\Controller;
-
-use Bimp\Forge\Mail\Mail;
+use Bimp\Forge\Security\Middleware;
 
 class homeController extends Controller implements IController{
 
@@ -20,6 +19,10 @@ class homeController extends Controller implements IController{
         $this->setSlug('home');
         $this->setDescription('home');
         $this->render();
+    }
+
+    function documentacion(){
+        throw new Exception("Esto es un error de prueba desde la pagina de documentacion");
     }
 
     

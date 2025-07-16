@@ -2,6 +2,10 @@
 
 function get_sitename(){ return SITE_NAME; }
 
+function is_local(){
+    return (IS_LOCAL === true);
+}
+
 function json_output($json, $die = true){
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json; charset=utf-8');
@@ -260,5 +264,47 @@ function validar_rut($rut) {
     return $digito === $dv_calculado;
 }
 
+/**
+ * Regresa true si es requerida autenticacion con api keys para consumir los
+ * recursos de la API de Bimp Forge y la instancia actual
+ */
+function forge_api_authetication(){
+    $name = 'API_AUTH';
+    if(!defined($name)){
+        throw new Exception(sprintf('La constante %s no existe o no se ha definido en el sistema y es requerida para esta función.',$name));
+    }
+    return (API_AUTH === true);
+}
 
+function load_styles($params){
+    if (isset($params)) {
+        $archivoCss = $params . '.css';
+        $rutaCompleta = CSS_PATH . $archivoCss;
+        $rutaURL = CSS . $archivoCss;
+
+        if (file_exists($rutaCompleta)) {
+            echo "<link rel='stylesheet' href='" . $rutaURL . "'>\n";
+        }else{
+            echo " ";
+        }
+    } else {
+        echo " ";
+    }
+}
+
+function load_scripts($params){
+    if (isset($params)) {
+        $archivoJs = $params . '.js';
+        $rutaCompleta = JS_PATH . $archivoJs;
+        $rutaURL = JS . $archivoJs;
+
+        if (file_exists($rutaCompleta)) {
+            echo "<script src='" . $rutaURL . "'></script>\n";
+        } else {
+            echo " ";
+        }
+    } else {
+        echo " ";
+    }
+}
 
