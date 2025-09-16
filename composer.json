@@ -1,0 +1,27 @@
+{
+    "name": "bimp/forge",
+    "description": "Framework",
+    "type": "project",
+    "require": {
+        "vlucas/phpdotenv": "^5.6",
+        "dompdf/dompdf": "^3.1",
+        "twig/twig": "^3.21",
+        "endroid/qr-code": "^6.0",
+        "cocur/slugify": "^4.6",
+        "phpmailer/phpmailer": "^6.10",
+        "verot/class.upload.php": "^2.1"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Bimp\\Forge\\": "storage/src/forge/"
+        }
+    },
+    "authors": [
+        {
+            "name": "bimp-software",
+            "email": "bimp.software@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}

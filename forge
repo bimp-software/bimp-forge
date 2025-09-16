@@ -1,0 +1,41 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Dotenv\Dotenv;
+
+$path = basename(dirname($_SERVER['SCRIPT_FILENAME']));
+
+if(file_exists($path.'/.env')){
+    $dotnev = Dotenv::createImmutable($path);
+    $dotnev->load();
+}else{
+    die("Error: No se ha encontrado el archivo .env en la raiz del proyecto, es requerido para que el sitio funcione.{$path}");
+}
+
+$file = 'storage/src/forge/configuration/Bootstrap.php';
+if(!is_file($file)) die(sprintf("Error: La carga del archivo de configuracion del proyecto. %s", $file));
+require_once $file;
+
+// --- Autoloader mínimo para el namespace Bimp\Forge\ ---
+spl_autoload_register(function ($class) {
+    $prefix = 'Bimp\\Forge\\';
+    $baseDir = __DIR__ . '/storage/src/forge/'; // <- raíz del código fuente
+
+    if (strncasecmp($class, $prefix, strlen($prefix)) !== 0) {
+        return;
+    }
+    $relative = substr($class, strlen($prefix));
+    $file = $baseDir . str_replace('\\', DIRECTORY_SEPARATOR, $relative) . '.php';
+
+    if (is_file($file)) {
+        require $file;
+    }
+});
+
+// Ejecutar la consola
+use Bimp\Forge\Console\Forge;
+
+$cli = new Forge();
+exit($cli->run($argv));

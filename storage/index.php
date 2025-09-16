@@ -1,0 +1,5 @@
+<?php
+    /**
+     * Silencio es oro
+     */
+?>
