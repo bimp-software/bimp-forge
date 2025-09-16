@@ -8,6 +8,8 @@ define('DEV_PATH'  , '/'.$_ENV['NAME_PROYECTO'].'/'); //Ruta del proyecto
 define('LIVE_PATH' , '/');
 define('BASE_PATH' , IS_LOCAL ? DEV_PATH : LIVE_PATH);
 
+define('PHPMAILER_TEMPLATE', 'emailTemplate');
+
 // Sesiones de usuario persistentes
 define('FORGE_USERS_TABLE'         , $_ENV['FORGE_USERS_TABLE']);      
 define('FORGE_COOKIES'             , $_ENV['FORGE_COOKIES']);     
