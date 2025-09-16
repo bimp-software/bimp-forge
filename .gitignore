@@ -1,4 +1,7 @@
 composer.phar
+/vendor/
+vendor
+
 .env
 
 composer.lock

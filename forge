@@ -1,8 +1,40 @@
 #!/usr/bin/env php
 
 <?php
+// --- util: ejecutar comandos de forma portable ---
+function run_cmd(string $cmd, ?string $cwd = null): int {
+    $descriptors = [0 => STDIN, 1 => STDOUT, 2 => STDERR];
+    $proc = proc_open($cmd, $descriptors, $pipes, $cwd ?: getcwd());
+    if (!is_resource($proc)) return 1;
+    return proc_close($proc);
+}
 
-require_once __DIR__.'/vendor/autoload.php';
+// 1) Autoload de Composer si existe
+$composerAutoload = __DIR__ . '/vendor/autoload.php';
+if (!file_exists($composerAutoload)) {
+    // 2) vendor NO existe: ejecutar bin/install.sh
+    $installer = __DIR__ . '/bin/install.sh';
+    if (file_exists($installer)) {
+        if (stripos(PHP_OS_FAMILY, 'Windows') === false) {
+            @chmod($installer, 0755);
+            $code = run_cmd(sprintf('bash %s', escapeshellarg($installer)));
+        } else {
+            $code = run_cmd(sprintf('bash %s', escapeshellarg($installer)));
+            if ($code !== 0) {
+                fwrite(STDERR, "No pude ejecutar bin/install.sh con 'bash'. Abre Git Bash/WSL y corre ./bin/install.sh manualmente.\n");
+            }
+        }
+
+        // Reintentar autoload tras la instalación
+        if (file_exists($composerAutoload)) {
+            require $composerAutoload;
+        }
+    } else {
+        fwrite(STDERR, "No existe vendor/ ni bin/install.sh. Corre 'composer install' o agrega un bin/install.sh.\n");
+    }
+} else {
+    require $composerAutoload;
+}
 
 require_once __DIR__.'/storage/src/forge/console/Forge.php';
 
