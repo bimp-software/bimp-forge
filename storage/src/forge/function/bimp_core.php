@@ -23,7 +23,7 @@ function to_object($array){
  * @return string
  */
 function get_sitename(){
-	return $_ENV['SITE_NAME'] ?: $ENV['NAME_PROYECTO'];
+	return $_ENV['SITE_NAME'] ?: $_ENV['NAME_PROYECTO'];
 }
 
 /**
