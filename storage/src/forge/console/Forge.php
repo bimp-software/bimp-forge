@@ -7,7 +7,6 @@ use Bimp\Forge\Console\Command\Command;
 
 use Bimp\Forge\Console\Command\Make\RunServer;
 use Bimp\Forge\Console\Command\Make\Install;
-use Bimp\Forge\Console\Command\Make\DatabasePing;
 
 final class Forge
 {
@@ -19,7 +18,6 @@ final class Forge
         // REGISTRA sin asignar al array (register() ya escribe en $this->commands)
         $this->register(RunServer::class);
         $this->register(Install::class);
-        $this->register(DatabasePing::class);
     }
 
     /**
