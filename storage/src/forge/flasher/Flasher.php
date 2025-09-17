@@ -5,7 +5,7 @@ namespace Bimp\Forge\Flasher;
 /**
  * Clase para notificaciones Flash en pantalla
  * 
- * @version 1.0.5
+ * @version 1.3.9
  */
 class Flasher {
     /**

@@ -22,7 +22,7 @@
 <?= get_vuejs(); ?>
 
 <!-- Estilos personalizados deben ir en main.css o abajo de esta línea -->
-<link rel="stylesheet" href="<?= CSS . 'main.css?v='.get_asset_version(); ?>">
+<link rel="stylesheet" href="<?= CSS ?>main.css">
 
 <!-- Estilos registrados manualmente -->
 <?= load_styles(); ?>

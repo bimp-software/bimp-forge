@@ -100,6 +100,19 @@ function now(){
 	return date('Y-m-d H:i:s');
 }
 
+/**
+ * Funcion para cargar el url de nuestro asset logotipo del sitio
+ * @return string
+ */
+function get_logo(){
+	$default_logo = SITE_LOGO;
+	$dummy_logo = 'https://via.placeholder.com/150x60';
+
+	if(!is_file(IMAGES_PATH.$default_logo)){
+		return $dummy_logo;
+	}
+	return IMG.$default_logo;
+}
 
 /**
  * Hace output en el body como json

@@ -138,8 +138,10 @@ class View {
 
         // Convertir el array asociativo en objeto
         if (is_array($data) && !is_object($data)) {
-            $d = to_object($data); // $data en array assoc o $d en objectos
+            to_object($data); // $data en array assoc o $d en objectos
         }
+
+        extract($data, EXTR_SKIP);
 
         require_once $this->viewsDir . $this->DS . $this->controller . $this->DS . $this->currentView;
     }

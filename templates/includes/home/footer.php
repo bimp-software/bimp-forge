@@ -1,4 +1,4 @@
-    <footer class="bg-light py-4 border-top">
+    <footer class="bg-dark py-4 border-top text-white stiky-bottom">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
                 <span>Desarrollado con <i class="fas fa-heart text-danger"></i> por bimp software</span>

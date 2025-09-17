@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="<?= get_site_lang(); ?>">
 <head>
-    <!-- Agregar basepath para definir a partir de donde se deben generar los enlaces y la carga de archivos -->
-    <base href="<?= get_basepath(); ?>">
+    <base href="<?= BASE_PATH; ?>">
+
     <!-- Charset del sitio -->
     <meta charset="<?= get_site_charset();?>">
-    <title><?= isset($d->title) ? $d->title . ' - ' . get_sitename() : 'Bienvenido - '. get_sitename(); ?></title>
     <!-- Meta viewport requerido para responsividad -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Retro compatibilidad con internet explorer / edge -->
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><?= isset($d->title) ? $d->title . ' - ' . get_sitename() : 'Bienvenido - '. get_sitename(); ?></title>
 
     <!-- Favicon del sitio -->
     <?= get_favicon(); ?>

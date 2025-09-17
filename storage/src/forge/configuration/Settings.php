@@ -40,13 +40,13 @@ define('SEEDERS'     , DATABASE . 'seeders' . DS);
 define('LOG'        , ROOT . 'logs' . DS);
 
 /** RESOURCES */
-define('RESOURCES'   , ROOT . 'resources' . DS);
-define('CSS'         , RESOURCES . 'css' . DS);
-define('FAVICON'     , RESOURCES . 'favicon' . DS);
-define('IMG'         , RESOURCES . 'img' . DS);
-define('JS'          , RESOURCES . 'js' . DS);
-define('PLUGINS'     , RESOURCES . 'plugins' . DS);
-define('UPLOADS'     , RESOURCES . 'uploads' . DS);
+define('RESOURCES'   , URL . 'resources/');
+define('CSS'         , RESOURCES . 'css/');
+define('FAVICON'     , RESOURCES . 'favicon/');
+define('IMG'         , RESOURCES . 'img/');
+define('JS'          , RESOURCES . 'js/');
+define('PLUGINS'     , RESOURCES . 'plugins/');
+define('UPLOADS'     , RESOURCES . 'uploads/');
 
 define('UPLOADED'    , ROOT.'resources'.DS.'uploads'.DS);
 
