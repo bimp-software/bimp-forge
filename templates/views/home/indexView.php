@@ -11,7 +11,6 @@
             <h2 class="mt-5 mb-3"><span class="text-white">Forge</span> <span class="text-danger">framework</span></h2>
 
             <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, ducimus!</p>
-
         </div>
     </div>
 </main>

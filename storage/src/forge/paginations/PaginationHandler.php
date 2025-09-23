@@ -1,6 +1,6 @@
 <?php
 
-namespace Bimp\Forge;
+namespace Bimp\Forge\Pagination;
 
 use Bimp\Forge\Database\Model;
 

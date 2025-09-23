@@ -15,6 +15,8 @@ class Routers {
             $this->url = rtrim($this->url, '/');
             $this->url = filter_var($this->url, FILTER_SANITIZE_URL);
             $this->url = explode('/', strtolower($this->url));
+            //Crear middleware
+
             return $this->url;
         }
     }

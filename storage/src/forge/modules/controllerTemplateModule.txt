@@ -5,18 +5,14 @@ use Bimp\Forge\Interfaces\IController;
 
 use Bimp\Forge\Flasher\Flasher;
 
-class homeController extends Controller implements IController {
+class [[REPLACE]]Controller extends Controller implements IController {
 
     function __construct(){ parent::__construct(); }
 
     function index(){
-        $this->setTitle('Inicio');
+        $this->setTitle('[[REPLACE]]');
         $this->setView('index');
         $this->render();
     }
 
-    function hola(){
-        $this->setView('hola');
-        $this->render();
-    }
 }
