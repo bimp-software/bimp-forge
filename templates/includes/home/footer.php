@@ -1,4 +1,4 @@
-    <footer class="bg-dark py-4 border-top text-white stiky-bottom">
+    <footer class="bg-dark py-4 border-top text-white fixed-bottom">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
                 <span>Desarrollado con <i class="fas fa-heart text-danger"></i> por bimp software</span>
@@ -9,6 +9,6 @@
 
     <?php require_once INCLUDES . 'home/scripts.php'; ?>
 
-</body>
+</body> 
 
 </html>

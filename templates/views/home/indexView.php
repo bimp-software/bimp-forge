@@ -1,11 +1,11 @@
 <?php require_once INCLUDES.'home/header.php'; ?>
 <?php require_once INCLUDES.'home/navbar.php'; ?>
 
-<main class="container-fluid py-5 main-wrapper bg-dark">
+<main class="container-fluid py-5 bg-dark vh-100">
     <div class="row">
         <div class="col-12 col-md-6 text-center offset-md-3 py-5">
             <a href="<?php echo get_base_url(); ?>">
-                <img src="<?= get_logo(); ?>" alt="<?= get_sitename() ?>" class="img-fluid" style="width: 150px;">
+                <img src="<?= get_logo(); ?>" alt="<?= get_sitename() ?>" class="img-fluid py-2" style="width: 150px;">
             </a>
 
             <h2 class="mt-5 mb-3"><span class="text-white">Forge</span> <span class="text-danger">framework</span></h2>
