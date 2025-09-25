@@ -16,6 +16,7 @@ class Autoloader {
             CONTROLLERS,
             FUNCTIONS,
             MODELS,
+            MIDDLEWARE,
 
             /** Database */
             DATABASE,
@@ -49,6 +50,7 @@ class Autoloader {
             COMMAND,
             SUPPORT,
             MAKE,
+            INPUT,
             DBASE,
             DIRECTIVE,
             EXCEPTIONS,

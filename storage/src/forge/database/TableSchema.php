@@ -1,178 +1,226 @@
-<?php 
+<?php
 
 namespace Bimp\Forge\Database;
 
-use \Exception;
+use Exception;
 
 class TableSchema {
 
-    private $sql = null;
-    private $table_name = null;
-    private $columm = null;
-    private $colummns = [];
-    private $pk = [];
-    private $fk = [];
-    private $engine = DB_ENGINE;
-    private $charset = DB_CHARSET;
-    private $auto_inc = 1;
-    private $ph = '`%s`';
+    private ?string $sql = null;
+    private string $table_name;
+    private ?string $column = null;
+    private array $columns = [];
+    private array $pk = [];   // admite PK compuesta
+    private array $fk = [];   // reservado para futuro
+    private string $engine;
+    private string $charset;
+    private int $auto_inc = 1; // valor inicial del AUTO_INCREMENT de la tabla (opcional)
+    private string $ph = '`%s`';
 
-    public function __construct(string $table_name, string $engine = null, string $charset = null) {
+    public function __construct(string $table_name, ?string $engine = null, ?string $charset = null) {
         $this->table_name = strtolower(str_replace(' ', '_', $table_name));
-        $this->engine = $engine !== null ? $engine : $this->engine;
-        $this->charset = $charset !== null ? $charset : $this->charset;
+        $this->engine  = $engine  ?? (defined('DB_ENGINE')  ? DB_ENGINE  : 'InnoDB');
+        $this->charset = $charset ?? (defined('DB_CHARSET') ? DB_CHARSET : 'utf8mb4');
     }
 
     /**
-     * Agrega una columna a la tabla en curso
+     * Agrega una columna
+     *
      * @param string $column_name
-     * @param string $type
-     * @param mixed $value
-     * @param boolean $nulleable
-     * @param string $default_value
-     * @param boolean $pk;
-     * @param boolean $auto_inc
-     * @return void
+     * @param string $type (varchar, int, bigint, text, timestamp, datetime, boolean, decimal, etc.)
+     * @param mixed  $value (tamaño/precisión si aplica, p.ej. 255 para varchar, ['10','2'] para decimal)
+     * @param bool   $nullable
+     * @param mixed  $default_value (null|'current_timestamp'|'current_timestamp_on_update'|valor escalar)
+     * @param bool   $pk
+     * @param bool   $auto_inc
      */
-    public function addColumn(string $column_name, string $type, $value = null, bool $nulleable = true, string $default_value = 'null', bool $pk = false, bool $auto_inc = false) {
-        $this->columm = sprintf('%s %s %s %s',sprintf($this->ph, $column_name), $this->validate_datatype($type, $value),$nulleable === true ? 'NULL' : 'NOT NULL',$this->validate_default_value($default_value));
+    public function addColumn(
+        string $column_name,
+        string $type,
+        $value = null,
+        bool $nullable = true,
+        $default_value = null,
+        bool $pk = false,
+        bool $auto_inc = false
+    ): void {
+        $typeSql   = $this->validate_datatype($type, $value);
+        $nullSql   = $nullable ? 'NULL' : 'NOT NULL';
+        $defaultSql= $this->validate_default_value($default_value);
 
-        //Si es primary key
-        if($pk === true){ 
+        $colSql = sprintf('%s %s %s %s',
+            sprintf($this->ph, $column_name),
+            $typeSql,
+            $nullSql,
+            $defaultSql
+        );
+
+        // Si el PK es de una única columna, puedes marcar inline.
+        if ($pk === true) {
             $this->pk[] = $column_name;
-            $this->columm .= ' PRIMARY KEY';
+            // Si sólo habrá PK simple, puedes marcar inline:
+            // $colSql .= ' PRIMARY KEY';
         }
 
-        //Si es auto incrementable
-        if($pk === true && $auto_inc === true){
-            $this->columm .= ' AUTO_INCREMENT';
+        if ($auto_inc === true) {
+            // MySQL requiere entero (int/bigint) para AUTO_INCREMENT
+            $lower = strtolower($type);
+            if (!in_array($lower, ['int','bigint','mediumint','smallint','tinyint'], true)) {
+                throw new Exception('AUTO_INCREMENT solo es válido para tipos enteros.');
+            }
+            $colSql .= ' AUTO_INCREMENT';
         }
 
-        $this->colummns[] = $this->columm;
+        $this->columns[] = trim(preg_replace('/\s+/', ' ', $colSql));
     }
 
     /**
-     * Verifica que el valor y el tipo de valor sean validos
-     * @param string $type
-     * @param mixed $value
-     * @return void
+     * Validar tipo y armar SQL del tipo
      */
-    private function validate_datatype(string $type, $value = null){
-        $output = '';
+    private function validate_datatype(string $type, $value = null): string {
+        $t = strtolower($type);
 
-        switch(strtolower($type)){
+        switch ($t) {
             case 'varchar':
-                $default = 255;
-                $min = 1;
-                $max = 255;
+                $min = 1; $max = 255; $default = 255;
+                if ($value === null) { $value = $default; }
+                if (!is_int($value)) { throw new Exception("varchar requiere un entero (1-255)."); }
+                $len = max($min, min($max, $value));
+                return "VARCHAR($len)";
 
-                if(is_null($value)) { $value = $default; }
-                if(!is_integer($value)){ throw new Exception(sprintf('El valor debe ser numerico y como maximo de %s',$max)); }
-
-                $value = $value > $max ? $max : ($value <= 0 ? $min : $value);
-                $output = sprintf('%s(%s)',$type,$value);
-                break;
             case 'int':
-                $min = 1;
-                $max = 11;
+                // Nota: INT(11) es “display width” (deprecated). Lo dejamos por compatibilidad.
+                $len = (is_int($value) && $value > 0) ? $value : 11;
+                return "INT($len)";
 
-                if(!is_integer($value) && $value !== null){ throw new Exception(sprintf('El valor debe ser numerico y como maximo de %s',$max)); }
+            case 'bigint':
+                $len = (is_int($value) && $value > 0) ? $value : 20;
+                return "BIGINT($len)";
 
-                $value = $value > $max ? $max : ($value <= 0 ? $min : $value);
-                $output = sprintf('%s(%s)',$type, $value);
-                break;
+            case 'boolean':
+            case 'bool':
+                return "TINYINT(1)";
+
+            case 'text':
+                return "TEXT";
+
+            case 'timestamp':
+                return "TIMESTAMP";
+
+            case 'datetime':
+                return "DATETIME";
+
+            case 'decimal':
+                // $value puede ser [precision, scale]
+                $precision = 10; $scale = 2;
+                if (is_array($value) && count($value) === 2) {
+                    [$precision, $scale] = $value;
+                }
+                return sprintf('DECIMAL(%d,%d)', (int)$precision, (int)$scale);
+
             default:
-            throw new Exception(sprintf('El tipo de dato %s no es valido',$type));
+                throw new Exception(sprintf('Tipo de dato no soportado: %s', $type));
         }
-
-        return $output;
     }
 
     /**
-     * Validar el valor por defecto de la columna
-     * @param mixed $default_value
-     * @return string
+     * Validar DEFAULT
      */
-    private function validate_default_value($default_value){
-        $output = '';
-
-        switch($output){
-            case false:
-                $output = ''; break;
-            case 'null':
-                $output = 'DEFAULT NULL'; break;
-            case 'current_timestamp':
-                $output = 'DEFAULT CURRENT_TIMESTAMP'; break;
-            case 'current_timestamp_on_update':
-                $output = 'DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'; break;
-            default: 
-                $output = sprintf("DEFAULT '%s'",$default_value); break;
+    private function validate_default_value($default_value): string {
+        if ($default_value === false) {
+            return ''; // sin DEFAULT
+        }
+        if ($default_value === null || strtolower((string)$default_value) === 'null') {
+            return 'DEFAULT NULL';
         }
 
-        return $output;
+        $val = is_string($default_value) ? strtolower($default_value) : $default_value;
+
+        if ($val === 'current_timestamp') {
+            return 'DEFAULT CURRENT_TIMESTAMP';
+        }
+        if ($val === 'current_timestamp_on_update') {
+            return 'DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP';
+        }
+
+        // Boolean → 0/1
+        if (is_bool($default_value)) {
+            return 'DEFAULT ' . ($default_value ? '1' : '0');
+        }
+
+        // Números sin comillas
+        if (is_int($default_value) || is_float($default_value)) {
+            return 'DEFAULT ' . $default_value;
+        }
+
+        // Cualquier otro valor → entre comillas
+        return sprintf("DEFAULT '%s'", addslashes((string)$default_value));
     }
 
     /**
-     * Metodo getter 
-     * @param string $property
-     * @return mixed
+     * Getter genérico
      */
-    public function get($property){
-        if(!isset($this->{$property})){ throw new Exception(sprintf('La propiedad %s no existe',$property)); }
+    public function get(string $property) {
+        if (!property_exists($this, $property)) {
+            throw new Exception(sprintf('La propiedad %s no existe', $property));
+        }
         return $this->{$property};
     }
 
     /**
-     * Metodo setter
-     * @param string $property
-     * @param mixed $value
-     * @return mixed
+     * Setter genérico
      */
-    public function set($property, $value){
-        if(!isset($this->{$property})){ throw new Exception(sprintf('La propiedad %s no existe',$property)); }
+    public function set(string $property, $value) {
+        if (!property_exists($this, $property)) {
+            throw new Exception(sprintf('La propiedad %s no existe', $property));
+        }
         $this->{$property} = $value;
         return $this->{$property};
     }
 
     /**
-     * Construye el query completo para crear la tabla de la base de datos 
-     * @return string
+     * Construir SQL CREATE TABLE
      */
-    private function build(){
-        if(empty($this->colummns)){ throw new Exception('No hay columnas para crear la tabla.'); }
+    private function build(): string {
+        if (empty($this->columns)) {
+            throw new Exception('No hay columnas para crear la tabla.');
+        }
 
-        $this->sql = sprintf('CREATE TABLE %s',sprintf($this->ph, $this->table_name));
+        $this->sql = sprintf('CREATE TABLE %s (', sprintf($this->ph, $this->table_name));
 
-        if(empty($this->colummns)){ throw new Exception('No hay columnas, agrega minimo una columna.'); }
+        // columnas separadas por coma
+        $this->sql .= implode(', ', $this->columns);
 
-        $this->sql .= '(';
-
-        //agregando cada una de las columnas
-        $total = count($this->colummns);
-        foreach($this->colummns as $i => $col){
-            if(($total - 1) === $i){
-                $this->sql .= sprintf('%s', $col);
-            }else{
-                $this->sql .= sprintf('%s', $col);
-            }
+        // PK compuesta (si hay más de una)
+        if (count($this->pk) > 1) {
+            $cols = array_map(fn($c) => sprintf($this->ph, $c), $this->pk);
+            $this->sql .= ', PRIMARY KEY (' . implode(', ', $cols) . ')';
+        } elseif (count($this->pk) === 1) {
+            // Si deseas PK simple como constraint (en vez de inline):
+            // $this->sql .= ', PRIMARY KEY (' . sprintf($this->ph, $this->pk[0]) . ')';
         }
 
         $this->sql .= ')';
 
-        $this->sql .= sprintf(' ENGINE=%s AUTO_INCREMENT=%s DEFAULT CHARSET=%s;', $this->engine,$this->auto_inc, $this->charset);
-        return $sql;
+        // Opciones de tabla
+        $this->sql .= sprintf(' ENGINE=%s AUTO_INCREMENT=%d DEFAULT CHARSET=%s;',
+            $this->engine,
+            $this->auto_inc,
+            $this->charset
+        );
+
+        return $this->sql;
     }
 
     /**
-     * Regresa el query SQL completo para la creacion de la tabla
-     * @return string
+     * SQL completo CREATE TABLE
      */
-    public function get_sql(){ return $this->build(); }
+    public function get_sql(): string { return $this->build(); }
+
+    // Alias estilo PSR si prefieres camelCase
+    public function getSql(): string { return $this->build(); }
 
     /**
-     * Regresa el nombre de la tabla
-     * @return string
+     * Nombre de la tabla
      */
-    public function getTableName(){ return $this->table_name; }
-
+    public function getTableName(): string { return $this->table_name; }
 }

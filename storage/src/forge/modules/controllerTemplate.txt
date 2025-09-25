@@ -1,0 +1,16 @@
+<?php
+
+use Bimp\Forge\Routers\Controller;
+use Bimp\Forge\Interfaces\IController;
+
+class [[REPLACE]]Controller extends Controller implements IController {
+
+    function __construct(){ parent::__construct(); }
+
+    function index(){
+        $this->setTitle('[[REPLACE]]');
+        $this->setView('index');
+        $this->render();
+    }
+
+}

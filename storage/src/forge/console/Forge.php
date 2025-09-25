@@ -7,6 +7,8 @@ use Bimp\Forge\Console\Command\Command;
 
 use Bimp\Forge\Console\Command\Make\RunServer;
 use Bimp\Forge\Console\Command\Make\Install;
+use Bimp\Forge\Console\Command\Make\Migration;
+use Bimp\Forge\Console\Command\Make\Controller;
 
 final class Forge
 {
@@ -18,6 +20,8 @@ final class Forge
         // REGISTRA sin asignar al array (register() ya escribe en $this->commands)
         $this->register(RunServer::class);
         $this->register(Install::class);
+        $this->register(Migration::class);
+        $this->register(Controller::class);
     }
 
     /**
@@ -64,9 +68,7 @@ final class Forge
     {
         echo <<<TXT
             Bimp Forge CLI
-
-            Uso:
-            php forge <comando> [opciones]
+            Uso: php forge <comando> [opciones]
 
             Comandos disponibles:
             TXT;

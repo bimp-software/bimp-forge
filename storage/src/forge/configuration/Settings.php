@@ -29,6 +29,7 @@ define('APP'         , ROOT . 'app' . DS);
 define('CONTROLLERS' , APP . 'controllers' . DS);
 define('FUNCTIONS'   , APP . 'functions' . DS);
 define('MODELS'      , APP . 'models' . DS);
+define('MIDDLEWARE'  , APP . 'middleware' . DS);
 
 /** Database */
 define('DATABASE'    , ROOT . 'database' . DS);
@@ -66,6 +67,7 @@ define('CONSOLE'     , FORGE . 'console' . DS);
 define('COMMAND'     , CONSOLE . 'command' . DS);
 define('SUPPORT'     , CONSOLE . 'support' . DS);
 define('MAKE'        , COMMAND . 'make' . DS);
+define('INPUT'       , COMMAND . 'input' . DS);
 
 define('DBASE'       , FORGE . 'databse' . DS);
 define('DIRECTIVE'   , FORGE . 'directive' . DS);

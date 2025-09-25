@@ -1,0 +1,31 @@
+<?php
+
+use Bimp\Forge\Database\TableSchema;
+use Bimp\Forge\Database\Schema;
+
+return new class extends Migration {
+
+    public function up() {
+        // Crear esquema de tabla
+        $t = new TableSchema('[[TABLE]]','[[ENGINE]]','[[CHARSET]]');
+
+        // ID autoincremental
+        $t->addColumn('id', 'int', 11, false, null, true, true);
+
+        // Ejemplo de columna de texto
+        $t->addColumn('name', 'varchar', 120, false);
+
+        // Marca de tiempo de creación
+        $t->addColumn('created_at', 'timestamp', null, false, 'current_timestamp');
+
+        // Marca de tiempo de actualización
+        $t->addColumn('updated_at', 'timestamp', null, true, 'current_timestamp_on_update');
+
+        // Ejecutar SQL generado
+        Schema::exec($t->getSql());
+    }
+
+    public function down() {
+        Schema::exec("DROP TABLE IF EXISTS `table_name`;");
+    }
+};

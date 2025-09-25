@@ -1,7 +1,11 @@
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
+define('FORGE_START', microtime(true));
+
+//Requerido
 use Bimp\Forge\Foundation\Application;
 
-$app = new Application();
+//Ejecuta el framework forge
+Application::forge();

@@ -72,9 +72,7 @@ class Application {
     private $endpoint            = ['api']; //Rutas o endpoint autorizados de la API por defecto
     private $ajaxes              = ['ajax']; // Rutas o controladores para procesar peticiones asincronas o AJAX
 
-    function __construct(){
-        $this->init();
-    }
+    function __construct(){}
 
     function __destruct(){}
 
@@ -449,7 +447,7 @@ class Application {
                 }
 
                 return true;
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 forge_die($e->getMessage());
             }
         }
@@ -479,11 +477,17 @@ class Application {
 
         // Llamada al método que solicita el usuario en curso
         if (empty($this->params)) {
-        call_user_func([$this->controller, $this->current_method]);
+            call_user_func([$this->controller, $this->current_method]);
         } else {
-        call_user_func_array([$this->controller, $this->current_method], $this->params);
+            call_user_func_array([$this->controller, $this->current_method], $this->params);
         }
 
         return true; // Línea final, todo sucede entre esta línea y el comienzo
+    }
+
+    public static function forge(){
+        $app = new self();
+        $app->init();
+        return;
     }
 }
