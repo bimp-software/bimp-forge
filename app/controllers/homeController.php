@@ -15,8 +15,4 @@ class homeController extends Controller implements IController {
         $this->render();
     }
 
-    function hola(){
-        $this->setView('hola');
-        $this->render();
-    }
 }
