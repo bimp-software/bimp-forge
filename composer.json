@@ -15,7 +15,11 @@
     "autoload": {
         "psr-4": {
             "Bimp\\Forge\\": "storage/src/forge/"
-        }
+        },
+        "files": [
+            "app/functions/bimp_functions_custom.php",
+            "app/functions/bimp_globals.php"
+        ]
     },
     "authors": [
         {
@@ -23,5 +27,6 @@
             "email": "bimp.software@gmail.com"
         }
     ],
+    "bin": ["bin/install"],
     "minimum-stability": "stable"
 }

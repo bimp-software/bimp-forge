@@ -14,7 +14,7 @@ class Migration implements Command
 
     public static function name(): string
     {
-        return 'make:schema';
+        return 'make:migrations';
     }
 
     public static function description(): string
@@ -32,7 +32,7 @@ class Migration implements Command
          * php forge make:schema users --engine=InnoDB --charset=utf8mb4
          */
         if(empty($args[0])){
-            echo "Uso: php forge make:schema <table> [--pivot] [--engine=InnoDB] [--charset=utf8mb4]";
+            echo "Uso: php forge make:migrations <table> [--pivot] [--engine=InnoDB] [--charset=utf8mb4]";
             return 1;
         }
 
