@@ -9,6 +9,7 @@ use Bimp\Forge\Console\Command\Make\RunServer;
 use Bimp\Forge\Console\Command\Make\Install;
 use Bimp\Forge\Console\Command\Make\Migration;
 use Bimp\Forge\Console\Command\Make\Controller;
+use Bimp\Forge\Console\Command\Make\MigrationRun;
 
 final class Forge
 {
@@ -18,10 +19,11 @@ final class Forge
     public function __construct()
     {
         // REGISTRA sin asignar al array (register() ya escribe en $this->commands)
-        $this->register(RunServer::class);
         $this->register(Install::class);
+        $this->register(RunServer::class);
         $this->register(Migration::class);
         $this->register(Controller::class);
+        $this->register(MigrationRun::class);
     }
 
     /**
