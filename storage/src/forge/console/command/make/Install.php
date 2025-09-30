@@ -12,7 +12,7 @@ class Install implements Command {
     }
 
     public static function name(): string {
-        return 'install';
+        return 'prepared-project';
     }
 
     public static function description(): string {

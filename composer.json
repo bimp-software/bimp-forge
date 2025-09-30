@@ -1,7 +1,9 @@
 {
     "name": "bimp/forge",
     "description": "Framework",
+    "keywords": ["Framework","bimp forge","bimp software"],
     "type": "project",
+    "homepage": "https://forge.bimp-software.cl/",
     "require": {
         "vlucas/phpdotenv": "^5.6",
         "dompdf/dompdf": "^3.1",
@@ -21,6 +23,11 @@
             "app/functions/bimp_globals.php"
         ]
     },
+    "scripts": {
+        "post-create-project-cmd": [
+            "@php forge install"
+        ]
+    },
     "authors": [
         {
             "name": "bimp-software",
@@ -28,5 +35,6 @@
         }
     ],
     "bin": ["bin/install"],
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }
